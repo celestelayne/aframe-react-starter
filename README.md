@@ -1,68 +1,111 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# A-Frame && React Starter
 
-## Available Scripts
+## React Setup
 
-In the project directory, you can run:
+Create a directory to initialize the project. The following code creates a new directory to store the app you're about to write, then cd into the folder.
 
-### `npm start`
+```bash
+$ create-react-app aframe-react-starter # creates your new app
+$ cd aframe-react-starter # navigate into the directory
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project folder structure should look like the following:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+![](assets/image-01.png)
 
-### `npm test`
+Inside the `package.json` file, you will see several **scripts** have been provided that allows you to run several commands from Terminal:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![](assets/image-02.png)
 
-### `npm run build`
+You will also see that several dependencies have been installed: react, react-dom and react-scripts. Use `yarn start` to start a server that will serve the React application. This opens the app at `http://localhost:3000`.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The browser should now display the words "Hello World!"
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Now, open this project in your favorite code editor and modify the App Component to reflect the following changes in the `return()`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+import React, { Component } from 'react';
+import './App.css';
 
-### `npm run eject`
+class App extends Component {
+  return (
+    <div className="App">Hello World</div>
+  );
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+export default App;
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## A-Frame Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Now, we are going to install two dependencies for A-Frame into our application:
+ - [aframe-react](https://www.npmjs.com/package/aframe-react)
+ - [aframe](https://www.npmjs.com/package/aframe)
+ - [aframe-particle-system-component](https://www.npmjs.com/package/aframe-particle-system-component)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+$ npm install aframe aframe-react aframe-particle-system-component
+$ yarn add aframe aframe-react aframe-particle-system-component
+```
+
+
+
+Then, import it into the App component.
+
+```js
+import React, { Component } from 'react';
+import 'aframe';
+import 'aframe-particle-system-component';
+import { Entity, Scene } from 'aframe-react';
+
+class App extends Component {
+  render(){
+      return (
+        <Scene>
+          <Entity
+            geometry={{primitive: 'box'}}
+            material={{color: 'blue'}}
+            position={{x: 0, y: 0, z: -5}}/>
+          <Entity
+            particle-system={{preset: 'snow'}}
+            position='0 2.25 -15' />
+          <Entity light={{type: 'point'}}/>
+          <Entity gltf-model={{src: 'virtualcity.gltf'}}/>
+          <Entity text={{value: 'Hello, WebVR!'}}/>
+        </Scene>
+      );
+  }
+}
+
+export default App;
+```
+
+## A-Frame Dev Tools & Visual Inspector
+
+Now it's time to explore our world using the dev tools and visual inspector. A-Frame provides a visual tool -- [A-Frame Inspector](https://aframe.io/docs/0.9.0/introduction/visual-inspector-and-dev-tools.html) -- for inspecting and tweaking scenes.
+
+With your browser active, go ahead hit the following keys together: `<ctrl> + <alt> + i`. This will open the visual inspector and dev tools. On the left side of the screen you will see the scene graph with all of the components we just created.
+
+The Inspector is similar to the browser’s DOM inspector but tailored for 3D and A-Frame.
+
+![](assets/image-03.png)
+
+### Using the Inspector
+
+##### Scene Graph
+
+The scene graph (left panel) is a tree-based representation of the scene.
+
+##### Viewport
+
+The viewport (center panel) displays the scene from the Inspector’s point of the view. We can rotate, pan, or zoom the viewport to change the view of the scene. You can also click on entities to select them and transform their properties.
+
+##### Components Panel
+
+The components panel (right panel) displays the selected entity’s components and properties. 
 
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
